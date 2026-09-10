@@ -1,0 +1,166 @@
+.property-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: box-shadow 0.22s, transform 0.22s;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+  outline: none;
+}
+.property-card:hover {
+  box-shadow: var(--shadow-lg) !important;
+  transform: translateY(-4px);
+}
+.property-card:focus {
+  box-shadow: 0 0 0 3px rgba(14, 124, 134, 0.3) !important;
+}
+
+/* ── Image ── */
+.pc-image-wrap {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  background: var(--sand);
+  flex-shrink: 0;
+}
+.pc-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+.property-card:hover .pc-image {
+  transform: scale(1.05);
+}
+.pc-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  background: linear-gradient(135deg, var(--sand) 0%, var(--sand-dark) 100%);
+}
+
+/* Badges top-left */
+.pc-image-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+/* Photo count badge bottom-right */
+.pc-image-count {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Body ── */
+.pc-body {
+  padding: 1.1rem 1.2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.pc-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pc-location {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  line-height: 1.45;
+}
+
+/* Amenities */
+.pc-amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.pc-amenity {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--teal);
+  background: rgba(14, 124, 134, 0.08);
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+}
+.pc-amenity-more {
+  color: var(--gray-500);
+  background: var(--gray-100);
+}
+
+/* ── Footer ── */
+.pc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--gray-100);
+}
+
+.pc-price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+.pc-price-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.pc-price-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.pc-price-unit {
+  font-size: 0.72rem;
+  color: var(--gray-400);
+  font-weight: 400;
+}
+
+/* View details CTA */
+.pc-view-btn {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--teal);
+  white-space: nowrap;
+  transition: gap 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.property-card:hover .pc-view-btn {
+  text-decoration: underline;
+}

@@ -1,13 +1,303 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* Colors */
+  --navy:        #1a3c5e;
+  --navy-dark:   #0f2540;
+  --teal:        #0e7c86;
+  --teal-light:  #12a3b0;
+  --sand:        #f5f0e8;
+  --sand-dark:   #ede6d8;
+  --rust:        #c0392b;
+  --rust-light:  #e74c3c;
+  --green:       #16a34a;
+  --white:       #ffffff;
+  --gray-50:     #f9fafb;
+  --gray-100:    #f3f4f6;
+  --gray-200:    #e5e7eb;
+  --gray-300:    #d1d5db;
+  --gray-400:    #9ca3af;
+  --gray-500:    #6b7280;
+  --gray-700:    #374151;
+  --gray-900:    #111827;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+
+  /* Spacing */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Shadows */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.14);
+  --shadow-xl:  0 20px 60px rgba(0,0,0,0.20);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--gray-50);
+  color: var(--gray-900);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a  { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+input, textarea, select { font-family: inherit; }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+}
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none !important; }
+
+.btn-primary {
+  background: var(--teal);
+  color: var(--white);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--teal-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-navy {
+  background: var(--navy);
+  color: var(--white);
+}
+.btn-navy:hover:not(:disabled) {
+  background: var(--navy-dark);
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background: var(--rust);
+  color: var(--white);
+}
+.btn-danger:hover:not(:disabled) {
+  background: var(--rust-light);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--teal);
+  border: 1.5px solid var(--teal);
+}
+.btn-outline:hover:not(:disabled) {
+  background: var(--teal);
+  color: var(--white);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--gray-700);
+  border: 1.5px solid var(--gray-300);
+}
+.btn-ghost:hover:not(:disabled) { background: var(--gray-100); }
+
+.btn-green {
+  background: var(--green);
+  color: var(--white);
+}
+.btn-green:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-lg {
+  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
+}
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8rem;
+}
+.btn-full { width: 100%; }
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  letter-spacing: 0.01em;
+}
+.form-input,
+.form-select,
+.form-textarea {
+  padding: 0.65rem 0.9rem;
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  background: var(--white);
+  color: var(--gray-900);
+  width: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(14,124,134,0.12);
+}
+.form-input::placeholder { color: var(--gray-400); }
+.form-textarea { resize: vertical; min-height: 90px; }
+.form-hint { font-size: 0.75rem; color: var(--gray-400); }
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-100);
+  overflow: hidden;
+}
+
+/* ============================================================
+   BADGE
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.badge-teal  { background: rgba(14,124,134,0.12); color: var(--teal); }
+.badge-navy  { background: rgba(26,60,94,0.10);   color: var(--navy); }
+.badge-sand  { background: var(--sand);            color: var(--navy); }
+.badge-green { background: rgba(22,163,74,0.12);  color: var(--green); }
+.badge-red   { background: rgba(192,57,43,0.12);  color: var(--rust); }
+
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--gray-200);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 3rem auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 37, 64, 0.65);
+  backdrop-filter: blur(5px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.15s ease;
+}
+.modal-box {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  animation: slideUp 0.2s ease;
+}
+@keyframes fadeIn  { from { opacity: 0; }              to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; }
+                     to   { transform: translateY(0);    opacity: 1; } }
+
+/* ============================================================
+   PROPERTY GRID
+   ============================================================ */
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.empty-icon { font-size: 3.5rem; }
+.empty-state h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--navy);
+}
+.empty-state p { color: var(--gray-500); font-size: 0.92rem; }
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.divider {
+  height: 1px;
+  background: var(--gray-200);
+  margin: 1.25rem 0;
+}
+
+/* ============================================================
+   RESPONSIVE HELPERS
+   ============================================================ */
+@media (max-width: 640px) {
+  .hide-mobile { display: none !important; }
 }

@@ -1,0 +1,188 @@
+.navbar {
+  background: var(--navy-dark);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  gap: 1rem;
+}
+
+/* ── Brand ── */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.brand-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.brand-name span {
+  color: var(--teal-light);
+}
+
+/* ── Links ── */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.72);
+  transition: color 0.15s;
+  padding-bottom: 2px;
+}
+.nav-link:hover {
+  color: var(--white);
+}
+.nav-link.active {
+  color: var(--white);
+  border-bottom: 2px solid var(--teal-light);
+}
+
+/* ── Admin login button (for visitors) ── */
+.nav-login-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.1rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  transition: all 0.18s;
+}
+.nav-login-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.65);
+  color: var(--white);
+}
+
+/* ── Admin info strip ── */
+.navbar-admin {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+.admin-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.admin-name {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.logout-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 0.78rem !important;
+  padding: 0.35rem 0.75rem !important;
+}
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: var(--white) !important;
+}
+
+/* ── Hamburger ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.25s;
+}
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: var(--navy-dark);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem 1.5rem 1.5rem;
+    gap: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .nav-login-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navbar-admin {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 0 0;
+    padding-left: 0;
+    flex-wrap: wrap;
+  }
+
+  .logout-btn {
+    margin-left: auto;
+  }
+}
