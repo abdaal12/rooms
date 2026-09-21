@@ -82,9 +82,6 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-bg" />
         <div className="container hero-content">
-          <span className="hero-eyebrow">
-            🏠 No Login &nbsp;·&nbsp; No Registration &nbsp;·&nbsp; Just Browse
-          </span>
           <h1 className="hero-title">
             Find Your Perfect<br />
             <span className="hero-highlight">Apartments & Rooms for Rent</span>
