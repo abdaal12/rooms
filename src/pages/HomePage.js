@@ -87,7 +87,7 @@ export default function HomePage() {
           </span>
           <h1 className="hero-title">
             Find Your Perfect<br />
-            <span className="hero-highlight">Room for Rent</span>
+            <span className="hero-highlight">Apartments & Rooms for Rent</span>
           </h1>
           <p className="hero-subtitle">
             Search by area name, sector, phase or locality.
