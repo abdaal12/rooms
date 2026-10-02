@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import imageCompression from 'browser-image-compression';
 import { createProperty, updateProperty, getProperty } from '../api';
 import './AddPropertyPage.css';
 
@@ -15,15 +16,24 @@ const AMENITIES_LIST = [
   'Furnished', 'Kitchen', 'Water 24/7', 'CCTV',
 ];
 
+// Compression options — compress to under 1MB for Cloudinary efficiency
+const COMPRESSION_OPTIONS = {
+  maxSizeMB:            1,      // compress to max 1MB
+  maxWidthOrHeight:     1280,   // max dimension
+  useWebWorker:         true,   // non-blocking
+  fileType:             'image/jpeg',
+};
 
 export default function AddPropertyPage() {
-  const navigate    = useNavigate();
-  const { id }      = useParams();          // exists when editing
-  const isEdit      = Boolean(id);
-  const fileRef     = useRef();
+  const navigate   = useNavigate();
+  const { id }     = useParams();
+  const isEdit     = Boolean(id);
+  const fileRef    = useRef();
 
-  const [loading,   setLoading]   = useState(false);
-  const [fetching,  setFetching]  = useState(isEdit); // loading existing data
+  const [loading,         setLoading]         = useState(false);
+  const [fetching,        setFetching]        = useState(isEdit);
+  const [compressing,     setCompressing]     = useState(false);
+  const [compressionInfo, setCompressionInfo] = useState([]); // track size savings
 
   const [form, setForm] = useState({
     title: '', description: '', address: '', area: '', city: '',
@@ -32,32 +42,29 @@ export default function AddPropertyPage() {
     ownerWhatsapp: '', amenities: [],
   });
 
-  // New images selected by admin this session
-  const [newImages,   setNewImages]   = useState([]);
-  const [newPreviews, setNewPreviews] = useState([]);
-
-  // Existing images from DB (edit mode only)
+  const [newImages,      setNewImages]      = useState([]);
+  const [newPreviews,    setNewPreviews]    = useState([]);
   const [existingImages, setExistingImages] = useState([]);
 
-  // ── Load property data when editing ──────────────────────────────────────
+  // Load property data in edit mode
   useEffect(() => {
     if (!isEdit) return;
     setFetching(true);
     getProperty(id)
       .then(({ data }) => {
         setForm({
-          title:         data.title        || '',
-          description:   data.description  || '',
-          address:       data.address      || '',
-          area:          data.area         || '',
-          city:          data.city         || '',
-          locationUrl:   data.locationUrl  || '',
-          priceMin:      data.priceMin     || '',
-          priceMax:      data.priceMax     || '',
-          roomType:      data.roomType     || 'Single Room',
-          ownerName:     data.ownerName    || '',
-          ownerPhone:    data.ownerPhone   || '',
-          ownerWhatsapp: data.ownerWhatsapp|| '',
+          title:         data.title         || '',
+          description:   data.description   || '',
+          address:       data.address       || '',
+          area:          data.area          || '',
+          city:          data.city          || '',
+          locationUrl:   data.locationUrl   || '',
+          priceMin:      data.priceMin      || '',
+          priceMax:      data.priceMax      || '',
+          roomType:      data.roomType      || 'Single Room',
+          ownerName:     data.ownerName     || '',
+          ownerPhone:    data.ownerPhone    || '',
+          ownerWhatsapp: data.ownerWhatsapp || '',
           amenities:     Array.isArray(data.amenities) ? data.amenities : [],
         });
         setExistingImages(Array.isArray(data.images) ? data.images : []);
@@ -69,7 +76,6 @@ export default function AddPropertyPage() {
       .finally(() => setFetching(false));
   }, [id, isEdit, navigate]);
 
-  // ── Handlers ──────────────────────────────────────────────────────────────
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((f) => ({ ...f, [name]: value }));
@@ -84,23 +90,63 @@ export default function AddPropertyPage() {
     }));
   };
 
-  const handleNewImages = (e) => {
+  // Compress images before storing them
+  const handleNewImages = async (e) => {
     const files = Array.from(e.target.files).slice(0, 6 - existingImages.length);
-    setNewImages(files);
-    setNewPreviews(files.map((f) => URL.createObjectURL(f)));
+    if (files.length === 0) return;
+
+    // Validate file size — reject anything over 10MB before compression
+    const oversized = files.filter((f) => f.size > 10 * 1024 * 1024);
+    if (oversized.length > 0) {
+      toast.error(`${oversized.length} image(s) exceed 10MB. Please choose smaller files.`);
+      return;
+    }
+
+    setCompressing(true);
+    setCompressionInfo([]);
+    toast.loading('Compressing images…', { id: 'compress' });
+
+    try {
+      const compressionResults = [];
+      const compressedFiles = await Promise.all(
+        files.map(async (file) => {
+          const originalSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+          const compressed     = await imageCompression(file, COMPRESSION_OPTIONS);
+          const newSizeMB      = (compressed.size / (1024 * 1024)).toFixed(2);
+
+          compressionResults.push({
+            name:     file.name,
+            original: originalSizeMB,
+            after:    newSizeMB,
+          });
+
+          // Keep original filename
+          return new File([compressed], file.name, { type: 'image/jpeg' });
+        })
+      );
+
+      setCompressionInfo(compressionResults);
+      setNewImages(compressedFiles);
+      setNewPreviews(compressedFiles.map((f) => URL.createObjectURL(f)));
+
+      toast.success(`${files.length} image(s) compressed & ready!`, { id: 'compress' });
+    } catch (err) {
+      toast.error('Image compression failed. Try again.', { id: 'compress' });
+    } finally {
+      setCompressing(false);
+    }
   };
 
   const removeNewImage = (i) => {
-    setNewImages((prev)    => prev.filter((_, idx) => idx !== i));
-    setNewPreviews((prev)  => prev.filter((_, idx) => idx !== i));
+    setNewImages((prev)         => prev.filter((_, idx) => idx !== i));
+    setNewPreviews((prev)       => prev.filter((_, idx) => idx !== i));
+    setCompressionInfo((prev)   => prev.filter((_, idx) => idx !== i));
   };
 
-  // Remove an existing image (edit mode)
   const removeExistingImage = (i) => {
     setExistingImages((prev) => prev.filter((_, idx) => idx !== i));
   };
 
-  // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -121,7 +167,6 @@ export default function AddPropertyPage() {
     try {
       const fd = new FormData();
 
-      // Text fields
       Object.entries(form).forEach(([key, val]) => {
         if (key === 'amenities') {
           val.forEach((a) => fd.append('amenities', a));
@@ -130,11 +175,8 @@ export default function AddPropertyPage() {
         }
       });
 
-      // Existing images to keep (edit mode)
       existingImages.forEach((img) => fd.append('existingImages', img));
-
-      // New image files
-      newImages.forEach((img) => fd.append('images', img));
+      newImages.forEach((img)      => fd.append('images', img));
 
       if (isEdit) {
         await updateProperty(id, fd);
@@ -157,7 +199,6 @@ export default function AddPropertyPage() {
     <div className="add-page">
       <div className="container">
 
-        {/* Header */}
         <div className="add-header">
           <button className="btn btn-ghost" onClick={() => navigate('/admin')}>
             ← Back
@@ -174,7 +215,7 @@ export default function AddPropertyPage() {
 
         <form className="add-form" onSubmit={handleSubmit}>
 
-          {/* ── Section 1: Property Details ── */}
+          {/* Section 1: Property Details */}
           <div className="add-section card">
             <h2 className="add-section-title">🏠 Property Details</h2>
 
@@ -258,12 +299,12 @@ export default function AddPropertyPage() {
                 onChange={handleChange} placeholder="https://www.google.com/maps/embed?pb=..."
               />
               <span className="form-hint">
-                Google Maps → Share → Embed a map → Copy the src="..." URL
+                Google Maps → Share → Embed a map → Copy the src URL
               </span>
             </div>
           </div>
 
-          {/* ── Section 2: Amenities ── */}
+          {/* Section 2: Amenities */}
           <div className="add-section card">
             <h2 className="add-section-title">✅ Amenities</h2>
             <div className="amenities-grid">
@@ -283,9 +324,25 @@ export default function AddPropertyPage() {
             </div>
           </div>
 
-          {/* ── Section 3: Photos ── */}
+          {/* Section 3: Photos */}
           <div className="add-section card">
             <h2 className="add-section-title">📷 Photos</h2>
+
+            {/* Upload info box */}
+            <div className="upload-info-box">
+              <div className="upload-info-row">
+                <span>📏</span>
+                <span>Upload images between <strong>5MB – 10MB</strong> for best quality</span>
+              </div>
+              <div className="upload-info-row">
+                <span>⚡</span>
+                <span>Images are <strong>auto-compressed</strong> before upload to save Cloudinary space</span>
+              </div>
+              <div className="upload-info-row">
+                <span>🖼️</span>
+                <span>Formats accepted: <strong>JPG, PNG, WebP</strong> — Max <strong>10MB</strong> per image</span>
+              </div>
+            </div>
 
             {/* Existing images in edit mode */}
             {isEdit && existingImages.length > 0 && (
@@ -299,10 +356,7 @@ export default function AddPropertyPage() {
                         type="button"
                         className="img-remove-btn"
                         onClick={() => removeExistingImage(i)}
-                        title="Remove this photo"
-                      >
-                        ✕
-                      </button>
+                      >✕</button>
                       {i === 0 && <span className="img-cover-tag">Cover</span>}
                     </div>
                   ))}
@@ -311,7 +365,10 @@ export default function AddPropertyPage() {
             )}
 
             {/* Upload zone */}
-            <div className="upload-zone" onClick={() => fileRef.current.click()}>
+            <div
+              className={'upload-zone' + (compressing ? ' upload-zone-loading' : '')}
+              onClick={() => !compressing && fileRef.current.click()}
+            >
               <input
                 ref={fileRef}
                 type="file"
@@ -319,15 +376,47 @@ export default function AddPropertyPage() {
                 multiple
                 onChange={handleNewImages}
                 style={{ display: 'none' }}
+                disabled={compressing}
               />
-              <div className="upload-zone-icon">📁</div>
-              <div className="upload-zone-text">
-                {isEdit ? 'Click to add more photos' : 'Click to select photos'}
-              </div>
-              <div className="upload-zone-hint">
-                Up to {6 - existingImages.length} more &nbsp;·&nbsp; JPG, PNG, WebP &nbsp;·&nbsp; Max 5MB each
-              </div>
+              {compressing ? (
+                <>
+                  <div className="upload-zone-icon">⚙️</div>
+                  <div className="upload-zone-text">Compressing images…</div>
+                  <div className="upload-zone-hint">Please wait</div>
+                </>
+              ) : (
+                <>
+                  <div className="upload-zone-icon">📁</div>
+                  <div className="upload-zone-text">
+                    {isEdit ? 'Click to add more photos' : 'Click to select photos'}
+                  </div>
+                  <div className="upload-zone-hint">
+                    Up to {6 - existingImages.length} images &nbsp;·&nbsp;
+                    JPG, PNG, WebP &nbsp;·&nbsp; Max 10MB each
+                  </div>
+                </>
+              )}
             </div>
+
+            {/* Compression results */}
+            {compressionInfo.length > 0 && (
+              <div className="compression-results">
+                <p className="compression-title">✅ Compression Results</p>
+                {compressionInfo.map((info, i) => (
+                  <div key={i} className="compression-row">
+                    <span className="compression-name">{info.name}</span>
+                    <span className="compression-sizes">
+                      <span className="compression-before">{info.original} MB</span>
+                      <span className="compression-arrow">→</span>
+                      <span className="compression-after">{info.after} MB</span>
+                      <span className="compression-saved">
+                        saved {((info.original - info.after) / info.original * 100).toFixed(0)}%
+                      </span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* New image previews */}
             {newPreviews.length > 0 && (
@@ -339,9 +428,7 @@ export default function AddPropertyPage() {
                       type="button"
                       className="img-remove-btn"
                       onClick={() => removeNewImage(i)}
-                    >
-                      ✕
-                    </button>
+                    >✕</button>
                     <span className="img-new-tag">New</span>
                   </div>
                 ))}
@@ -349,7 +436,7 @@ export default function AddPropertyPage() {
             )}
           </div>
 
-          {/* ── Section 4: Owner Details ── */}
+          {/* Section 4: Owner Details */}
           <div className="add-section card">
             <h2 className="add-section-title">👤 Owner Contact</h2>
             <div className="add-row">
@@ -381,12 +468,16 @@ export default function AddPropertyPage() {
             </div>
           </div>
 
-          {/* ── Submit ── */}
+          {/* Submit */}
           <div className="add-submit">
             <button type="button" className="btn btn-ghost" onClick={() => navigate('/admin')}>
               Cancel
             </button>
-            <button type="submit" className="btn btn-primary btn-lg" disabled={loading}>
+            <button
+              type="submit"
+              className="btn btn-primary btn-lg"
+              disabled={loading || compressing}
+            >
               {loading
                 ? (isEdit ? 'Saving…' : 'Publishing…')
                 : (isEdit ? '💾 Save Changes' : '🚀 Publish Listing')}

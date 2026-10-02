@@ -247,3 +247,97 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
+
+/* Upload info box */
+.upload-info-box {
+  background: rgba(14, 124, 134, 0.06);
+  border: 1px solid rgba(14, 124, 134, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.upload-info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--gray-700);
+}
+.upload-info-row span:first-child {
+  flex-shrink: 0;
+  font-size: 0.95rem;
+}
+
+/* Compressing state */
+.upload-zone-loading {
+  opacity: 0.7;
+  cursor: not-allowed !important;
+  border-color: var(--teal) !important;
+  background: rgba(14, 124, 134, 0.05) !important;
+}
+
+/* Compression results */
+.compression-results {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin-top: 0.75rem;
+}
+.compression-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+.compression-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--gray-100);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.compression-row:last-child {
+  border-bottom: none;
+}
+.compression-name {
+  font-size: 0.78rem;
+  color: var(--gray-600);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.compression-sizes {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+}
+.compression-before {
+  color: var(--gray-400);
+  text-decoration: line-through;
+}
+.compression-arrow {
+  color: var(--gray-400);
+}
+.compression-after {
+  color: var(--navy);
+  font-weight: 700;
+}
+.compression-saved {
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--green);
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+}
