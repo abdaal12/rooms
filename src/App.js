@@ -5,12 +5,22 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider }   from './context/AuthContext';
 import ProtectedRoute     from './components/ProtectedRoute';
 import Navbar             from './components/Navbar';
+import Footer             from './components/Footer';
 
 import HomePage           from './pages/HomePage';
 import PropertyDetailPage from './pages/PropertyDetailPage';
 import AdminLoginPage     from './pages/AdminLoginPage';
 import AdminDashboard     from './pages/AdminDashboard';
 import AddPropertyPage    from './pages/AddPropertyPage';
+
+import {
+  TermsPage,
+  PrivacyPage,
+  OwnerAgreementPage,
+  GuidelinesPage,
+  DisclaimerPage,
+  ContactPage,
+} from './pages/LegalPages';
 
 export default function App() {
   return (
@@ -27,9 +37,17 @@ export default function App() {
         <main style={{ minHeight: 'calc(100vh - 64px)' }}>
           <Routes>
             {/* Public */}
-            <Route path="/"             element={<HomePage />} />
-            <Route path="/property/:id" element={<PropertyDetailPage />} />
-            <Route path="/admin/login"  element={<AdminLoginPage />} />
+            <Route path="/"                  element={<HomePage />} />
+            <Route path="/property/:id"      element={<PropertyDetailPage />} />
+            <Route path="/admin/login"       element={<AdminLoginPage />} />
+
+            {/* Legal */}
+            <Route path="/terms"             element={<TermsPage />} />
+            <Route path="/privacy"           element={<PrivacyPage />} />
+            <Route path="/owner-agreement"   element={<OwnerAgreementPage />} />
+            <Route path="/guidelines"        element={<GuidelinesPage />} />
+            <Route path="/disclaimer"        element={<DisclaimerPage />} />
+            <Route path="/contact"           element={<ContactPage />} />
 
             {/* Admin only */}
             <Route path="/admin" element={
@@ -38,12 +56,12 @@ export default function App() {
             <Route path="/admin/add" element={
               <ProtectedRoute><AddPropertyPage /></ProtectedRoute>
             } />
-            {/* Edit route — same page, different mode */}
             <Route path="/admin/edit/:id" element={
               <ProtectedRoute><AddPropertyPage /></ProtectedRoute>
             } />
           </Routes>
         </main>
+        <Footer />
       </BrowserRouter>
     </AuthProvider>
   );

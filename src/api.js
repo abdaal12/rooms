@@ -34,4 +34,10 @@ export const submitLead       = (data)        => API.post('/leads', data);
 export const getLeads         = ()            => API.get('/leads');
 export const updateLeadStatus = (id, status)  => API.patch(`/leads/${id}/status`, { status });
 
+export const submitReport = (data) => API.post('/reports', data);
+export const getReports   = ()     => API.get('/reports');
+export const updateReportStatus = (id, status) =>
+  API.patch(`/reports/${id}/status`, { status });
+
+
 export default API;

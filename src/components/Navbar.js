@@ -29,7 +29,7 @@ export default function Navbar() {
         <Link to="/" className="navbar-brand" onClick={close}>
           <span className="brand-icon">🏠</span>
           <span className="brand-name">
-            Room<span>Rent</span>
+            Nivas<span>24</span>
           </span>
         </Link>
 
