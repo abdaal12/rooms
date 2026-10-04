@@ -176,12 +176,8 @@
 .filter-bar-wrap {
   background: var(--white);
   border-bottom: 1px solid var(--gray-100);
-  position: sticky;
-  top: 64px;
-  z-index: 50;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-
 .filter-bar {
   display: flex;
   align-items: flex-end;
