@@ -10,7 +10,7 @@ function LegalLayout({ title, subtitle, children }) {
         <div className="container">
           <h1>{title}</h1>
           <p>{subtitle}</p>
-          <span className="legal-updated">Last updated: June 2025</span>
+          <span className="legal-updated">Last updated: November 2026</span>
         </div>
       </div>
       <div className="container legal-body">
@@ -389,7 +389,7 @@ export function ContactPage() {
             <span>📧</span>
             <div>
               <strong>Email</strong>
-              <p>support@nivas24.com</p>
+              <p>support@nivas24.online</p>
             </div>
           </div>
           <div className="contact-card-item">
@@ -406,7 +406,7 @@ export function ContactPage() {
         <p>If you have a complaint about a listing, an owner, or any experience on Nivas24, you can:</p>
         <ul>
           <li>Use the <strong>🚩 Report this listing</strong> button on any property page</li>
-          <li>Email us directly at <strong>grievance@nivas24.com</strong></li>
+          <li>Email us directly at <strong>grievance@nivas24.online</strong></li>
           <li>We aim to respond to all grievances within 3 working days</li>
         </ul>
       </Section>
@@ -416,14 +416,14 @@ export function ContactPage() {
       </Section>
 
       <Section title="Owner Support">
-        <p>For help with your property listing, adding photos, or managing your account, email us at <strong>owners@nivas24.com</strong>.</p>
+        <p>For help with your property listing, adding photos, or managing your account, email us at <strong>owners@nivas24.Online</strong>.</p>
       </Section>
 
       <Section title="Report Fraud or Scam">
         <p>If you believe a listing is fraudulent or that you have been scammed, please:</p>
         <ul>
           <li>Report the listing immediately using the 🚩 button on the listing page</li>
-          <li>Contact us at <strong>report@nivas24.com</strong> with details</li>
+          <li>Contact us at <strong>report@nivas24.online</strong> with details</li>
           <li>Also report to your local law enforcement if money was involved</li>
         </ul>
       </Section>

@@ -13,6 +13,8 @@ import AdminLoginPage     from './pages/AdminLoginPage';
 import AdminDashboard     from './pages/AdminDashboard';
 import AddPropertyPage    from './pages/AddPropertyPage';
 
+import ScrollToTop from './components/ScrollToTop';
+
 import {
   TermsPage,
   PrivacyPage,
@@ -26,6 +28,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />   {/* ← add this line */}
         <Toaster
           position="top-right"
           toastOptions={{
