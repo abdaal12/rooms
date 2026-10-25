@@ -1,0 +1,16 @@
+{
+  "name": "Nivas24 - Find Your Home",
+  "short_name": "Nivas24",
+  "description": "Find affordable rooms, PGs and rental properties.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#123456",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "type": "image/png"
+    }
+  ]
+}
