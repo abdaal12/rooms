@@ -138,13 +138,13 @@ export function PrivacyPage() {
       </Section>
 
       <Section title="3. Where We Store It">
-        <p>All data is stored securely on MongoDB Atlas cloud servers. Property images are stored on Cloudinary's secure cloud storage. Both services comply with industry-standard security practices.</p>
+        <p>All data is stored securely on  cloud servers. Property images are stored on secure cloud storage. Which comply with industry-standard security practices.</p>
       </Section>
 
       <Section title="4. Who Can See It">
         <ul>
           <li><strong>Visitors:</strong> Can see property listings including owner name and contact details as provided by the owner</li>
-          <li><strong>Admin:</strong> Can see all listings, callback requests, and reports through the admin dashboard</li>
+          <li><strong>Admin:</strong> Can see all of his/her listings and related  data through the admin dashboard</li>
           <li><strong>Third Parties:</strong> We do not sell, share, or rent your personal data to any third party</li>
         </ul>
       </Section>
@@ -152,7 +152,6 @@ export function PrivacyPage() {
       <Section title="5. How Long We Retain It">
         <ul>
           <li>Property listings are retained until the owner deletes them or Nivas24 removes them</li>
-          <li>Callback and lead requests are retained for 90 days then may be archived</li>
           <li>Reports are retained for 12 months for accountability purposes</li>
           <li>Admin accounts remain active until deleted</li>
         </ul>
