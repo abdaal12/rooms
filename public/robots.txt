@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block admin pages from Google
+Disallow: /admin
+Disallow: /admin/
+
+Sitemap: https://nivas24.com/sitemap.xml

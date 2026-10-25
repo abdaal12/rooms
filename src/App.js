@@ -36,18 +36,23 @@ export default function App() {
         <Navbar />
         <main style={{ minHeight: 'calc(100vh - 64px)' }}>
           <Routes>
+
             {/* Public */}
-            <Route path="/"                  element={<HomePage />} />
-            <Route path="/property/:id"      element={<PropertyDetailPage />} />
-            <Route path="/admin/login"       element={<AdminLoginPage />} />
+            <Route path="/" element={<HomePage />} />
+
+            {/* IMPORTANT: preview must be BEFORE :id */}
+            <Route path="/property/preview" element={<PropertyDetailPage />} />
+            <Route path="/property/:id"     element={<PropertyDetailPage />} />
+
+            <Route path="/admin/login" element={<AdminLoginPage />} />
 
             {/* Legal */}
-            <Route path="/terms"             element={<TermsPage />} />
-            <Route path="/privacy"           element={<PrivacyPage />} />
-            <Route path="/owner-agreement"   element={<OwnerAgreementPage />} />
-            <Route path="/guidelines"        element={<GuidelinesPage />} />
-            <Route path="/disclaimer"        element={<DisclaimerPage />} />
-            <Route path="/contact"           element={<ContactPage />} />
+            <Route path="/terms"           element={<TermsPage />} />
+            <Route path="/privacy"         element={<PrivacyPage />} />
+            <Route path="/owner-agreement" element={<OwnerAgreementPage />} />
+            <Route path="/guidelines"      element={<GuidelinesPage />} />
+            <Route path="/disclaimer"      element={<DisclaimerPage />} />
+            <Route path="/contact"         element={<ContactPage />} />
 
             {/* Admin only */}
             <Route path="/admin" element={
@@ -59,6 +64,7 @@ export default function App() {
             <Route path="/admin/edit/:id" element={
               <ProtectedRoute><AddPropertyPage /></ProtectedRoute>
             } />
+
           </Routes>
         </main>
         <Footer />

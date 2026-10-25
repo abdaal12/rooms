@@ -18,18 +18,25 @@ export default function PropertyCard({ property }) {
   const amenities   = Array.isArray(property.amenities) ? property.amenities : [];
   const isAvailable = property.isAvailable !== false;
 
-  // Cloudinary returns full URL — use directly, no prefix needed
   const imgSrc = images.length > 0 ? images[0] : null;
+
+  const handleClick = () => {
+    // Hardcoded properties have no real DB id — pass data via state
+    if (property.isHardcoded) {
+      navigate(`/property/preview`, { state: { property } });
+    } else {
+      navigate(`/property/${property._id}`);
+    }
+  };
 
   return (
     <div
       className="property-card card"
-      onClick={() => navigate(`/property/${property._id}`)}
+      onClick={handleClick}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/property/${property._id}`); }}
+      onKeyDown={(e) => { if (e.key === 'Enter') handleClick(); }}
     >
-      {/* Image */}
       <div className="pc-image-wrap">
         {imgSrc ? (
           <img
@@ -44,43 +51,42 @@ export default function PropertyCard({ property }) {
             <span role="img" aria-label="house">🏠</span>
           </div>
         )}
-
         <div className="pc-image-badges">
           <span className="badge badge-teal">{roomType}</span>
           {!isAvailable && <span className="badge badge-red">Not Available</span>}
+          {property.isHardcoded && <span className="badge badge-sand">⭐ Featured</span>}
         </div>
-
         {images.length > 1 && (
           <div className="pc-image-count">🖼 {images.length} photos</div>
         )}
       </div>
 
-      {/* Body */}
       <div className="pc-body">
         <h3 className="pc-title">{title}</h3>
-
         <div className="pc-location">
           <span>📍</span>
           <span>{[address, area, city].filter(Boolean).join(', ')}</span>
         </div>
-
         {amenities.length > 0 && (
           <div className="pc-amenities">
             {amenities.slice(0, 3).map((a, i) => (
               <span key={i} className="pc-amenity">✓ {a}</span>
             ))}
             {amenities.length > 3 && (
-              <span className="pc-amenity pc-amenity-more">+{amenities.length - 3} more</span>
+              <span className="pc-amenity pc-amenity-more">
+                +{amenities.length - 3} more
+              </span>
             )}
           </div>
         )}
-
         <div className="pc-footer">
           <div className="pc-price">
             <span className="pc-price-label">Rent</span>
             <span className="pc-price-value">
               Rs. {priceMin.toLocaleString()}
-              {priceMax && priceMax !== priceMin ? ` – ${priceMax.toLocaleString()}` : ''}
+              {priceMax && priceMax !== priceMin
+                ? ` – ${priceMax.toLocaleString()}`
+                : ''}
             </span>
             <span className="pc-price-unit">/mo</span>
           </div>
