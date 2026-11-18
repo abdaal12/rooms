@@ -388,7 +388,7 @@ export function ContactPage() {
             <span>📧</span>
             <div>
               <strong>Email</strong>
-              <p>support@nivas24.online</p>
+              <p>supportnivas24@gmail.com</p>
             </div>
           </div>
           <div className="contact-card-item">
@@ -404,14 +404,14 @@ export function ContactPage() {
       <Section title="Grievance Redressal">
         <p>If you have a complaint about a listing, an owner, or any experience on Nivas24, you can:</p>
         <ul>
-          <li>Use the <strong>🚩 Report this listing</strong> button on any property page</li>
-          <li>Email us directly at <strong>grievance@nivas24.online</strong></li>
+          <li>Use the <strong> Report this listing</strong> button on any property page</li>
+          <li>Email us directly at <strong>supportnivas24@gmail.com</strong></li>
           <li>We aim to respond to all grievances within 3 working days</li>
         </ul>
       </Section>
 
       <Section title="Privacy Requests">
-        <p>To request correction or deletion of your personal data, email us at <strong>privacy@nivas24.com</strong> with your request. We will respond within 7 working days.</p>
+        <p>To request correction or deletion of your personal data, email us at <strong>supportnivas24@gmail.com</strong> with your request. We will respond within 7 working days.</p>
       </Section>
 
       <Section title="Owner Support">
@@ -421,8 +421,8 @@ export function ContactPage() {
       <Section title="Report Fraud or Scam">
         <p>If you believe a listing is fraudulent or that you have been scammed, please:</p>
         <ul>
-          <li>Report the listing immediately using the 🚩 button on the listing page</li>
-          <li>Contact us at <strong>report@nivas24.online</strong> with details</li>
+          <li>Report the listing immediately using the  button on the listing page</li>
+          <li>Contact us at <strong>supportnivas24@gmail.com</strong> with details</li>
           <li>Also report to your local law enforcement if money was involved</li>
         </ul>
       </Section>
