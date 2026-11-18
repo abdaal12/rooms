@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 
+
 export default function Footer() {
   return (
     <footer className="footer">
@@ -13,7 +14,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src="/logo.png" alt="Nivas24" className="footer-logo-img" />
+              <img src="/favicon.png" alt="Nivas24" className="footer-logo-img" />
             </div>
             <p>
               A trusted property listing platform connecting tenants
@@ -57,6 +58,7 @@ export default function Footer() {
 
         {/* Divider */}
         <div className="footer-divider" />
+       
 
         {/* Bottom */}
         <div className="footer-bottom">

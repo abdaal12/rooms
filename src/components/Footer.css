@@ -12,11 +12,15 @@
 }
 
 .footer-logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--white);
   margin-bottom: 0.75rem;
+}
+
+.footer-logo-img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
 }
 
 .footer-brand p {

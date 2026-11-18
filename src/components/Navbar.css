@@ -21,10 +21,7 @@
   gap: 0.5rem;
   flex-shrink: 0;
 }
-.brand-icon {
-  font-size: 1.4rem;
-  line-height: 1;
-}
+
 .brand-name {
   font-family: var(--font-display);
   font-size: 1.4rem;
@@ -35,6 +32,29 @@
 .brand-name span {
   color: var(--teal-light);
 }
+
+
+
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-right: 8px;
+  border-radius: 8px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.brand-name {
+  font-size: 24px;
+  font-weight: 700;
+}
+
 
 /* ── Links ── */
 .navbar-links {

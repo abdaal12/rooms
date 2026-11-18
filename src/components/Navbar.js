@@ -25,14 +25,18 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="container navbar-inner">
 
-        {/* Brand */}
-        <Link to="/" className="navbar-brand" onClick={close}>
-          <span className="brand-icon">🏠</span>
-          <span className="brand-name">
-            Nivas<span>24</span>
-          </span>
-        </Link>
-
+       {/* Brand */}
+<Link to="/" className="navbar-brand" onClick={close}>
+  <img
+    src="/favicon.png"
+    alt="Nivas24 Logo"
+    className="brand-icon"
+  />
+{ /*.. <span className="brand-name"> 
+    Nivas<span>24</span>
+  </span> */}
+</Link>
+ 
         {/* Hamburger */}
         <button
           className={`hamburger ${menuOpen ? 'open' : ''}`}
