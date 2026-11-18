@@ -113,7 +113,7 @@ export default function AdminDashboard() {
         {/* Stats */}
         <div className="dash-stats">
           <div className="stat-card">
-            <div className="stat-icon">🏠</div>
+            <div className="stat-icon"></div>
             <div className="stat-info">
               <span className="stat-num">{properties.length}</span>
               <span className="stat-label">Total Properties</span>
@@ -164,14 +164,14 @@ export default function AdminDashboard() {
             className={"dash-tab" + (tab === "properties" ? " active" : "")}
             onClick={() => setTab("properties")}
           >
-            🏠 Properties
+             Properties
             <span className="dash-tab-count">{properties.length}</span>
           </button>
           <button
             className={"dash-tab" + (tab === "leads" ? " active" : "")}
             onClick={() => setTab("leads")}
           >
-            📨 Leads
+             Leads
             {newLeads > 0 && <span className="dash-tab-badge">{newLeads}</span>}
           </button>
         </div>
@@ -271,7 +271,7 @@ export default function AdminDashboard() {
                       to={`/admin/edit/${p._id}`}
                       className="btn btn-outline btn-sm"
                     >
-                      ✏️ Edit
+                       Edit
                     </Link>
 
                     {/* Delete */}
@@ -365,7 +365,6 @@ export default function AdminDashboard() {
 
                     {lead.property && (
                       <div className="lead-property">
-                        <span>🏠</span>
                         <div>
                           <div className="lead-prop-title">
                             {lead.property.title}

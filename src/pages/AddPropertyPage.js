@@ -217,7 +217,7 @@ export default function AddPropertyPage() {
 
           {/* Section 1: Property Details */}
           <div className="add-section card">
-            <h2 className="add-section-title">🏠 Property Details</h2>
+            <h2 className="add-section-title"> Property Details</h2>
 
             <div className="add-row">
               <div className="form-group">
@@ -256,7 +256,7 @@ export default function AddPropertyPage() {
                 <label className="form-label">City *</label>
                 <input
                   className="form-input" name="city" value={form.city}
-                  onChange={handleChange} placeholder="e.g. Lahore" required
+                  onChange={handleChange} placeholder="e.g. Mohali" required
                 />
               </div>
             </div>
@@ -306,7 +306,7 @@ export default function AddPropertyPage() {
 
           {/* Section 2: Amenities */}
           <div className="add-section card">
-            <h2 className="add-section-title">✅ Amenities</h2>
+            <h2 className="add-section-title"> Amenities</h2>
             <div className="amenities-grid">
               {AMENITIES_LIST.map((a) => (
                 <label
@@ -326,7 +326,7 @@ export default function AddPropertyPage() {
 
           {/* Section 3: Photos */}
           <div className="add-section card">
-            <h2 className="add-section-title">📷 Photos</h2>
+            <h2 className="add-section-title"> Photos</h2>
 
             {/* Upload info box */}
             <div className="upload-info-box">
@@ -335,11 +335,11 @@ export default function AddPropertyPage() {
                 <span>Upload images between <strong>5MB – 10MB</strong> for best quality</span>
               </div>
               <div className="upload-info-row">
-                <span>⚡</span>
+                
                 <span>Images are <strong>auto-compressed</strong> before upload to save Cloudinary space</span>
               </div>
               <div className="upload-info-row">
-                <span>🖼️</span>
+                
                 <span>Formats accepted: <strong>JPG, PNG, WebP</strong> — Max <strong>10MB</strong> per image</span>
               </div>
             </div>
@@ -480,7 +480,7 @@ export default function AddPropertyPage() {
             >
               {loading
                 ? (isEdit ? 'Saving…' : 'Publishing…')
-                : (isEdit ? '💾 Save Changes' : '🚀 Publish Listing')}
+                : (isEdit ? ' Save Changes' : ' Publish Listing')}
             </button>
           </div>
 
